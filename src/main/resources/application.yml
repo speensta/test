@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    platform: oracle
+    hikari:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:log4jdbc:oracle:thin:@192.168.35.139:1521/xe
+      username: homeuser
+      password: oracle
+      auto-commit: false
+      pool-name: hikari-cp
+      maximum-pool-size: 30
+      minimum-idle: 2
+      mvc:
+        view:
+          prefix: /WEB-INF/views/
+          suffix: .jsp
+mybatis:
+  configuration:
+    lazyLoadingEnabled=true
+    aggressiveLazyLoading=false
+    mapUnderscoreToCamelCase=true
+
+jpa:
+  show-sql: true
+  hibernate:
+    format_sql: true
+    ddl-auto: create
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          trace
+
+
+server:
+  port: 80
