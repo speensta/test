@@ -1,13 +1,11 @@
 package com.example.test.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,13 +27,18 @@ public class Board {
     @Column
     private String regnm;
     @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String hit;
+    private String userid;
+    @Column
+    private int hit;
     @CreationTimestamp
     @ColumnDefault("CURRENT_TIMESTAMP")
     private LocalDateTime regdate;
     @UpdateTimestamp
     @ColumnDefault("CURRENT_TIMESTAMP")
     private LocalDateTime moddate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userid", insertable = false, updatable = false)
+    private Member member;
 
 }

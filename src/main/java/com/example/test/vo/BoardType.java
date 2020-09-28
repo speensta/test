@@ -1,6 +1,6 @@
 package com.example.test.vo;
 
-public class BoardType {
+public class BoardType extends BoardTypeTest{
     private String boardType;
 
     public String getBoardType() {

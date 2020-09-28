@@ -19,6 +19,7 @@
     </style>
 </head>
 <div id="mainHide">
+    총건수 : <span th:text="${getTotalElements }"></span>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -42,6 +43,15 @@
         </tbody>
     </table>
 </div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item" th:each="i: ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link" href="#" th:href="@{/board/list(page=${i-1})}" th:text="${i}">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>
 <div class="pull-right" style="width:100px;margin:10px 0;">
     <a href="/board/form" class="btn btn-primary btn-block">등록</a>
 </div>
