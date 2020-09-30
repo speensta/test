@@ -25,6 +25,12 @@ public class Member {
     @Column
     private String role;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
-    private List<Board> boards;
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Board> boards = new ArrayList<>();
+
+    public void add(Board board) {
+        board.setMember(this);
+        this.getBoards().add(board);
+    }
+
 }

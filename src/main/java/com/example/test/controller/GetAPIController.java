@@ -7,6 +7,7 @@ import com.example.test.service.impl.BoardRepository;
 import com.example.test.vo.Board;
 import com.example.test.vo.Emp;
 import com.example.test.vo.EmpVO;
+import com.example.test.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -60,12 +62,12 @@ public class GetAPIController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/list")
-    public String getRequest(Model model, @PageableDefault(size = 2) Pageable pageable) {
+    public String getRequest(Model model, @PageableDefault(size = 20) Pageable pageable) {
 
         Page<Board> list = boardRepository.findAll(pageable);
 
-        int startPage = Math.max(1,list.getPageable().getPageNumber()-2);
-        int endPage = Math.max(list.getTotalPages(), list.getPageable().getPageNumber()+2);
+        int startPage = Math.max(1,list.getPageable().getPageNumber()-20);
+        int endPage = Math.max(list.getTotalPages(), list.getPageable().getPageNumber()+20);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("list", list);
@@ -84,15 +86,22 @@ public class GetAPIController {
         return "board/write";
     }
 
+
+    @Transactional
     @RequestMapping(method = RequestMethod.POST, path = "/create")
     public String create(Board board, @PathVariable(required = false) Long id) {
         boardRepository.save(board);
         return "redirect:/board/list";
     }
 
+    @Transactional
     @RequestMapping(method = RequestMethod.GET, path = "/update/{id}")
     public String update(Board board, @PathVariable Long id) {
-        boardCrudRepository.update(board);
+
+//        boardCrudRepository.update(board);
+//        boardCrudRepository.save(board);
+
+        boardRepository.save(board);
         return "redirect:/board/list";
     }
 

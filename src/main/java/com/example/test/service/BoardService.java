@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface BoardService {
     List<Map<String, Object>> getBoards() throws Exception;
+    void update();
 }
